@@ -1,0 +1,59 @@
+﻿@model ICollection<Veterinaria.Models.Animal>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">
+        @Model.Count animais.
+    </h1>
+    
+    <a asp-controller="Home" asp-action="Create" class="btn btn-primary">
+        Novo Animal
+    </a>
+    <table class="table table-responsive table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Espécie</th>
+                <th>Data de Nascimento</th>
+                <th>Raça</th>
+                <th>Cor</th>
+                <th>Peso</th>
+                <th>Altura</th>
+                <th>Excluir</th>
+                <th>Editar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var a in Model)
+            {
+                <tr>
+                    <td>@a.Id</td>
+                    <td>@a.Nome</td>
+                    <td>@a.TipoAnimal?.Especie</td>
+                    <td>@a.DtNascimento.ToShortDateString()</td>
+                    <td>@a.Raca</td>
+                    <td>@a.Cor</td>
+                    <td>@a.Peso</td>
+                    <td>@a.Altura</td>
+                    <td>
+                        <form asp-controller="Home" asp-action="Delete" method="post">
+                            <input type="hidden" name="id" value="@a.Id" />
+                            <button type="submit" class="btn btn-danger onclick="return confirm('Confirma a exclusão do estudante?');">
+                                Excluir
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <a asp-controller="Home" asp-action="Update" asp-route-id="@a.Id" class="btn btn-primary">
+                            Editar
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

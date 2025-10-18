@@ -1,0 +1,52 @@
+﻿@model ICollection<EFTest.Models.Student>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">
+        @Model.Count estudantes.
+    </h1>
+
+    <a asp-controller="Home" asp-action="Create" class="btn btn-primary">
+        Novo Estudante
+    </a>
+    <table class="table table-responsive table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Sobrenome</th>
+                <th>Data matrícula</th>
+                <th>Excluir</th>
+                <th>Editar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model)
+            {
+                <tr>
+                    <td>@s.ID</td>
+                    <td>@s.FirstMidName</td>
+                    <td>@s.LastName</td>
+                    <td>@s.EnrollmentDate.ToShortDateString()</td>
+                    <td>
+                        <form asp-controller="Home" asp-action="Delete" method="post">
+                            <input type="hidden" name="id" value="@s.ID" />
+                            <button type="submit" class="btn btn-danger"
+                                onclick="return confirm('Confirma a exclusão do estudante?');">
+                                Excluir
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <a asp-action="Update" asp-route-id="@s.ID" class="btn btn-sm">
+                            Editar
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

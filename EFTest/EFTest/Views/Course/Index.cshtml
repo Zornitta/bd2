@@ -1,0 +1,48 @@
+﻿@model ICollection<EFTest.Models.Course>
+
+@{
+    ViewData["Title"] = "Cursos";
+}
+
+<div class="text-center">
+    <h1 class="display-4">
+        @Model.Count cursos.
+    </h1>
+
+    <a asp-controller="Course" asp-action="Create" class="btn btn-primary">
+        Novo Curso
+    </a>
+    <table class="table table-responsive table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Excluir</th>
+                <th>Editar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model)
+            {
+                <tr>
+                    <td>@s.ID</td>
+                    <td>@s.Name</td>
+                    <td>
+                        <form asp-controller="Course" asp-action="Delete" method="post">
+                            <input type="hidden" name="id" value="@s.ID" />
+                            <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Confirma a exclusão do estudante?');">
+                                Excluir
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <a asp-action="Update" asp-route-id="@s.ID" class="btn btn-sm">
+                            Editar
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
